@@ -18,6 +18,8 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.OtherWheel;
 
+import edu.wpi.first.cameraserver.CameraServer;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -44,6 +46,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     driveTrain = new DriveTrain();
     otherWheel = new OtherWheel();
+
+    CameraServer.getInstance().startAutomaticCapture();
 
     m_oi = new OI();
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
