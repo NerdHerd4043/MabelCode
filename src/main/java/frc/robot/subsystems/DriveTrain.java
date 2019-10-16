@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
+import frc.robot.Robot;
 import frc.robot.commands.Drive;
 //import frc.robot.Robot;
 
@@ -36,9 +37,15 @@ public class DriveTrain extends Subsystem {
 				
 	}
 	public void drive(Joystick joy) {
-		inputSpeed = joy.getRawAxis(1);// * maxSpeed;
-		inputTurn = -joy.getRawAxis(4);// * maxTurn;
-		drive(inputSpeed, inputTurn - .1);
+
+		if (Robot.arcadeDrive.getBoolean(true)) {
+			inputSpeed = joy.getRawAxis(1);
+			inputTurn = -joy.getRawAxis(4);
+		  } else {
+			inputSpeed = joy.getRawAxis(1);
+			inputTurn = joy.getRawAxis(5);
+		  }
+		  drive(inputSpeed, inputTurn);
     }
     
 
@@ -52,7 +59,11 @@ public class DriveTrain extends Subsystem {
 	}*/
 	
 	public void drive(double left, double right) {
-		diffDrive.arcadeDrive(left, right);
+		if (Robot.arcadeDrive.getBoolean(true)) {
+			diffDrive.arcadeDrive(left, right, true);
+		  } else {
+			diffDrive.tankDrive(left, right, true);
+		  }
 	}
 	
     public void initDefaultCommand() {

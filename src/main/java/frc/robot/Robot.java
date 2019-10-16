@@ -10,15 +10,17 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.shuffleboard.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ExampleCommand;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.OtherWheel;
 
-import edu.wpi.first.cameraserver.CameraServer;
+// import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTableEntry;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,7 +32,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 public class Robot extends TimedRobot {
   public static DriveTrain driveTrain;
   public static OtherWheel otherWheel;
-
+  public static NetworkTableEntry arcadeDrive;
 
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI m_oi;
@@ -47,12 +49,20 @@ public class Robot extends TimedRobot {
     driveTrain = new DriveTrain();
     otherWheel = new OtherWheel();
 
-    CameraServer.getInstance().startAutomaticCapture();
+    // CameraServer.getInstance().startAutomaticCapture();
 
     m_oi = new OI();
-    m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
+    // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", m_chooser);
+    // SmartDashboard.putData("Auto mode", m_chooser);
+
+    ShuffleboardTab shuffTab = Shuffleboard.getTab("Drive");
+
+    arcadeDrive = shuffTab
+    .add("Arcade Drive", true) 
+    .withWidget(BuiltInWidgets.kToggleButton)
+    .getEntry();
+
   }
 
   /**
